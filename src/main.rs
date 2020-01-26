@@ -17,6 +17,7 @@ use crate::brightness::Brightness;
 use crate::canny::Canny;
 use crate::crop::Crop;
 use crate::laplace::Laplace;
+use std::os::raw::c_int;
 
 struct ImageEditor {
     modules: Vec<Box<dyn Module>>,
@@ -40,7 +41,15 @@ impl ImageEditor {
     }
 }
 
-fn main(){
-    //io::IO::test_c();
 
+fn main() {
+    println!("Hello from Rust");
+    #[link(name = "core_cpp", kind = "static")]
+    extern "C" {
+        pub fn hello();
+        pub fn test(a: c_int, b: c_int) -> c_int;
+    }
+
+    let res = unsafe { test(3, 5)};
+    println!("{}", res);
 }
