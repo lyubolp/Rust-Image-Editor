@@ -6,8 +6,26 @@
 #define RUST_IMAGE_EDITOR_IO_H
 
 
-class IO {
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/mat.hpp"
+using namespace cv;
 
+
+class IO{
+private:
+    String path;
+public:
+    IO() = default;
+    ~IO() = default;
+
+    bool save();
+    bool save_as(char* path);
+
+    Mat open(char* path);
+
+    Mat opened_image;
 };
 
 

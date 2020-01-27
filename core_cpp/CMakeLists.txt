@@ -7,7 +7,7 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(core_cpp STATIC library.cpp library.h)
+add_library(core_cpp STATIC library.cpp library.h IO.cpp IO.h)
 target_link_libraries( core_cpp ${OpenCV_LIBS} )
 
 
