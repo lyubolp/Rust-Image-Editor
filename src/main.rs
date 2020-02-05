@@ -1,9 +1,8 @@
 mod matrix;
 mod module;
 mod io;
-mod contrast;
 mod blur;
-mod brightness;
+mod brightness_contrast;
 mod canny;
 mod crop;
 mod laplace;
@@ -13,9 +12,9 @@ extern crate libc;
 use crate::matrix::Matrix;
 use crate::module::Module;
 use crate::io::IO;
-use crate::contrast::Contrast;
 use crate::blur::Blur;
-use crate::brightness::Brightness;
+use crate::brightness_contrast::Brightness;
+use crate::brightness_contrast::Contrast;
 use crate::canny::Canny;
 use crate::crop::Crop;
 use crate::laplace::Laplace;
@@ -28,6 +27,15 @@ struct ImageEditor {
     modules: Vec<Box<dyn Module>>,
     current_image: Matrix,
     io: IO,
+}
+#[link(name = "core_cpp", kind = "static")]
+extern "C" {
+    pub fn open_file(path: *const c_char) -> *mut c_int;
+    pub fn get_rows(path: *const c_char) -> c_int;
+    pub fn get_cols(path: *const c_char) -> c_int;
+    pub fn print(to_write: *const c_char);
+    pub fn read() -> *mut c_char;
+    pub fn clear_memory(memory: *mut c_char);
 }
 
 impl ImageEditor {
@@ -44,22 +52,18 @@ impl ImageEditor {
             io: IO::new(),
         }
     }
+
+    fn open_image(&mut self, path: &str){
+        match self.io.open(path){
+            Ok(image) => self.current_image = image,
+            Err(E) => println!("Unable to load image - error trace: {}", E)
+        }
+    }
 }
 
 
 fn main() {
-    #[link(name = "core_cpp", kind = "static")]
-    extern "C" {
-        pub fn open_file(path: *const c_char) -> *mut c_int;
-        pub fn print(to_write: *const c_char);
-        pub fn read() -> *mut c_char;
-        pub fn clear_memory(memory: *mut c_char);
-    }
-
-    unsafe {
-        let opened_matrix = open_file(CString::new("/home/lyubo/Uni/RustProject/Rust-Image-Editor/test.jpg").unwrap().as_ptr());
-        //let result = Vec::from_raw_parts(opened_matrix, 2160000, 2160010);
-        //println!("{:?}", result);
-    };
-
+    let mut image_editor = ImageEditor::new();
+    let path = "/home/lyubo/Uni/RustProject/Rust-Image-Editor/test.jpg";
+    image_editor.open_image(path);
 }

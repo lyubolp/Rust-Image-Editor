@@ -6,6 +6,7 @@
 
 Mat IO::open(char* path)
 {
+
     this->opened_image = imread(path);
     return this->opened_image;
 }
