@@ -39,23 +39,6 @@ int **open_file(const char *path) {
     if (!result.data) {
         return nullptr;
     }
-
-    uchar depth = result.type() & CV_MAT_DEPTH_MASK;
-    uchar chans = 1 + (result.type() >> CV_CN_SHIFT);
-    switch ( depth ) {
-        case CV_8U:  std::cout<<"8U"; break;
-        case CV_8S:  std::cout<< "8S"; break;
-        case CV_16U: std::cout<<"16U"; break;
-        case CV_16S: std::cout<<"16S"; break;
-        case CV_32S: std::cout<<"32S"; break;
-        case CV_32F: std::cout<<"32F"; break;
-        case CV_64F: std::cout<<"64F"; break;
-        default:     std::cout<<"User"; break;
-    }
-
-    std::cout<<"C";
-    std::cout<<(int)chans << std::endl;
-
     return convert_mat_to_memory(result);
 }
 
