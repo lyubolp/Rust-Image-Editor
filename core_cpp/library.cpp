@@ -18,9 +18,9 @@ int **convert_mat_to_memory(Mat image) {
     return matrix;
 }
 
-Mat convert_memory_to_image(int** memory, int rows, int cols)
+Mat convert_memory_to_image(int** memory, int rows, int cols, int type)
 {
-    Mat image(rows, cols, CV_8UC3);
+    Mat image(rows, cols, type);
 
     for (size_t row = 0; row < image.rows; row++) {
         for (size_t col = 0; col < image.cols; col++) {
@@ -40,12 +40,28 @@ int **open_file(const char *path) {
         return nullptr;
     }
 
+    uchar depth = result.type() & CV_MAT_DEPTH_MASK;
+    uchar chans = 1 + (result.type() >> CV_CN_SHIFT);
+    switch ( depth ) {
+        case CV_8U:  std::cout<<"8U"; break;
+        case CV_8S:  std::cout<< "8S"; break;
+        case CV_16U: std::cout<<"16U"; break;
+        case CV_16S: std::cout<<"16S"; break;
+        case CV_32S: std::cout<<"32S"; break;
+        case CV_32F: std::cout<<"32F"; break;
+        case CV_64F: std::cout<<"64F"; break;
+        default:     std::cout<<"User"; break;
+    }
+
+    std::cout<<"C";
+    std::cout<<(int)chans << std::endl;
+
     return convert_mat_to_memory(result);
 }
 
-int save_file(int** matrix, const char* path, int rows, int cols)
+int save_file(int** matrix, const char* path, int rows, int cols, int type)
 {
-    Mat image = convert_memory_to_image(matrix, rows, cols);
+    Mat image = convert_memory_to_image(matrix, rows, cols, type);
     return io_save(image, path);
 }
 
@@ -63,6 +79,15 @@ int get_cols(const char *path) {
         return -1;
     }
     return result.cols;
+}
+
+int get_type(const char *path)
+{
+    Mat result = io_open(path);
+    if (!result.data) {
+        return -1;
+    }
+    return result.type();
 }
 
 void free_memory(int** memory, int rows)

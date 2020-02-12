@@ -9,7 +9,6 @@ use crate::crop::Crop;
 use crate::laplace::Laplace;
 
 extern crate libc;
-
 use libc::{c_int};
 use std::os::raw::{c_char};
 use std::ffi::CString;
@@ -24,7 +23,8 @@ extern "C" {
     pub fn open_file(path: *const c_char) -> *mut c_int;
     pub fn get_rows(path: *const c_char) -> c_int;
     pub fn get_cols(path: *const c_char) -> c_int;
-    pub fn save_file(memory: *const c_int, path: *const c_char, rows: c_int, cols: c_int) -> c_int;
+    pub fn get_type(path: *const c_char) -> c_int;
+    pub fn save_file(memory: *const c_int, path: *const c_char, rows: c_int, cols: c_int, image_type: c_int) -> c_int;
     pub fn clear_memory(memory: *mut c_char);
 }
 
