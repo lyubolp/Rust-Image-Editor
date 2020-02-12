@@ -22,4 +22,8 @@ impl Matrix {
             height: rows as u32,
         }
     }
+
+    pub unsafe fn to_memory(&self) -> *const i32{
+        self.values.as_ptr()
+    }
 }

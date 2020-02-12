@@ -1,5 +1,5 @@
-use crate::Module;
-use crate::Matrix;
+use crate::module::Module;
+use crate::matrix::Matrix;
 
 pub struct Canny;
 

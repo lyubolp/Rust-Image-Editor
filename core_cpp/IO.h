@@ -13,20 +13,9 @@
 using namespace cv;
 
 
-class IO{
-private:
-    String path;
-public:
-    IO() = default;
-    ~IO() = default;
+int io_save(Mat image, const char* path);
 
-    bool save();
-    bool save_as(char* path);
-
-    Mat open(char* path);
-
-    Mat opened_image;
-};
+Mat io_open(const char* path);
 
 
 #endif //RUST_IMAGE_EDITOR_IO_H

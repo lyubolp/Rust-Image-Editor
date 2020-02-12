@@ -4,26 +4,14 @@
 
 #include "IO.h"
 
-Mat IO::open(char* path)
+Mat io_open(const char* path)
 {
-
-    this->opened_image = imread(path);
-    return this->opened_image;
+    return imread(path);
 }
 
-bool IO::save() {
+int io_save(Mat image, const char* path) {
     try {
-        imwrite(this->path, this->opened_image);
-        return true;
-    }
-    catch (std::runtime_error& ex) {
-        return false;
-    }
-}
-
-bool IO::save_as(char* path) {
-    try {
-        imwrite(path, this->opened_image);
+        imwrite(path, image);
         return true;
     }
     catch (std::runtime_error& ex) {
