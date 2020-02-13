@@ -33,12 +33,12 @@ extern "C" {
 impl ImageEditor {
     pub fn new() -> Self {
         ImageEditor {
-            modules: vec![(String::from("Contrast"), Box::new(Contrast::new())),
-                          (String::from("Blur"), Box::new(Blur::new())),
-                          (String::from("Brightness"), Box::new(Brightness::new())),
-                          (String::from("Canny"), Box::new(Canny::new())),
-                          (String::from("Crop"), Box::new(Crop::new())),
-                          (String::from("Laplace"), Box::new(Laplace::new()))
+            modules: vec![(String::from("Contrast"), Box::new(Contrast)),
+                          (String::from("Blur"), Box::new(Blur)),
+                          (String::from("Brightness"), Box::new(Brightness)),
+                          (String::from("Canny"), Box::new(Canny)),
+                          (String::from("Crop"), Box::new(Crop)),
+                          (String::from("Laplace"), Box::new(Laplace))
             ],
             current_image: Matrix::new(),
             io: IO::new(),
@@ -75,6 +75,13 @@ impl ImageEditor {
 
     pub fn call_module(&mut self, module_name: &str, args: &str)
     {
-
+        for mut pair in self.modules.iter()
+        {
+            if *pair.0 == String::from(module_name){
+                let module = &pair.1;;
+                self.current_image = module.exec(&self.current_image, args);
+                break;
+            }
+        }
     }
 }

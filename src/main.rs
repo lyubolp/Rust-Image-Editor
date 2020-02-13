@@ -16,6 +16,6 @@ fn main() {
     let mut image_editor = ImageEditor::new();
     let path = "tests/images/test_b.png";
     image_editor.open_image(path);
-    image_editor.
+    image_editor.call_module("Contrast", "0.5");
     image_editor.save_image_as("tests/images/test_a2.png");
 }

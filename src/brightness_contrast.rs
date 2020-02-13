@@ -11,10 +11,7 @@ use libc::{c_int, c_double};
 use crate::image_editor::{change_brightness, change_contrast};
 
 impl Module for Brightness {
-    fn new() -> Brightness {
-        Brightness
-    }
-    fn exec(image: Matrix, args: &str) -> Matrix where Self: Sized {
+    fn exec(&self, image: &Matrix, args: &str) -> Matrix where Self: Sized {
         let rows = image.rows as i32;
         let cols = image.cols as i32;
         let image_type = image.image_type;
@@ -34,10 +31,7 @@ impl Module for Brightness {
 }
 
 impl Module for Contrast {
-    fn new() -> Contrast {
-        Contrast
-    }
-    fn exec(image: Matrix, args: &str) -> Matrix where Self: Sized {
+    fn exec(&self, image: &Matrix, args: &str) -> Matrix where Self: Sized {
         let rows = image.rows as i32;
         let cols = image.cols as i32;
         let image_type = image.image_type;

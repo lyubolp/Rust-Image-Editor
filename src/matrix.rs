@@ -19,7 +19,6 @@ impl Matrix {
     }
 
     pub unsafe fn from_memory(memory: *mut i32, rows: c_int, cols: c_int, img_type: c_int) -> Self{
-
         Matrix{
             values: Vec::from_raw_parts(memory, (rows * cols) as usize, (rows * cols) as usize),
             cols: cols as u32,
