@@ -15,15 +15,15 @@ impl Module for Brightness {
         let rows = image.rows as i32;
         let cols = image.cols as i32;
         let image_type = image.image_type;
+        let brightness = match args.parse::<i32>()
+        {
+            Ok(val) => val,
+            Err(E) => {
+                println!("Argument invalid, setting it to 0");
+                0
+            }
+        };
         unsafe {
-            let brightness = match args.parse::<i32>()
-            {
-                Ok(val) => val,
-                Err(E) => {
-                    println!("Argument invalid, setting it to 0");
-                    0
-                }
-            };
             let memory = change_brightness(image.to_memory(), rows, cols, image.image_type, brightness);
             Matrix::from_memory(memory, rows, cols, image_type)
         }
