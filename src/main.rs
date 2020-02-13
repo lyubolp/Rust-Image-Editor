@@ -14,7 +14,8 @@ use crate::image_editor::ImageEditor;
 
 fn main() {
     let mut image_editor = ImageEditor::new();
-    let path = "tests/images/test_a.jpg";
+    let path = "tests/images/test_b.png";
     image_editor.open_image(path);
-    image_editor.save_image_as("tests/images/test_a2.jpg")
+    image_editor.
+    image_editor.save_image_as("tests/images/test_a2.png");
 }

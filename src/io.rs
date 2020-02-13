@@ -1,10 +1,6 @@
-use std::fs::File;
-use std::os::raw::c_int;
 use crate::matrix::Matrix;
-use std::os::raw::c_char;
-use std::ffi::{CString, CStr};
-use crate::image_editor::{open_file, get_cols, get_rows, save_file, ImageEditor, get_type};
-use std::ptr::null;
+use std::ffi::{CString};
+use crate::image_editor::{open_file, get_cols, get_rows, save_file, get_type};
 use std::io::{Error, ErrorKind};
 
 pub struct IO {
@@ -32,15 +28,14 @@ impl IO {
                 let opened_rows = get_rows(c_path);
                 let opened_cols = get_cols(c_path);
                 let img_type = get_type(c_path);
-                println!("img_type: {}", img_type);
                 Ok(Matrix::from_memory(opened_matrix, opened_rows, opened_cols, img_type))
             }
         }
     }
     fn call_c_save(image: &Matrix, c_path: *mut i8) -> std::io::Result<()>{
         unsafe{
-            match save_file(image.to_memory(), c_path, image.height as i32,
-                            image.width as i32, image.image_type)
+            match save_file(image.to_memory(), c_path, image.rows as i32,
+                            image.cols as i32, image.image_type)
             {
                 1 => Ok(()),
                 0 => Err(Error::new(ErrorKind::Other, "File could not be saved")),
