@@ -7,7 +7,6 @@ int **convert_mat_to_memory(Mat image) {
     for (size_t row = 0; row < image.rows; row++) {
         matrix[row] = new int[image.cols];
     }
-
     for (size_t row = 0; row < image.rows; row++) {
         for (size_t col = 0; col < image.cols; col++) {
             matrix[row][col] = image.at<Vec3b>(row, col)[0] * pow(256, 2)
@@ -81,4 +80,19 @@ void free_memory(int** memory, int rows)
     }
     delete[] memory;
 }
+
+int** change_brightness(int** matrix, int rows, int cols, int type, int brightness)
+{
+    Mat temp = convert_memory_to_image(matrix, rows, cols, type);
+    change_contrast_brightness(temp, 1.0, brightness);
+    return convert_mat_to_memory(temp);
+}
+
+int** change_contrast(int** matrix, int rows, int cols, int type, double contrast)
+{
+    Mat temp = convert_memory_to_image(matrix, rows, cols, type);
+    change_contrast_brightness(temp, contrast, 0);
+    return convert_mat_to_memory(temp);
+}
+
 }

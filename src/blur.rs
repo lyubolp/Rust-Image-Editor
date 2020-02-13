@@ -1,13 +1,10 @@
-use crate::module::Module;
+use crate::module::{Module};
 use crate::matrix::Matrix;
 
 pub struct Blur;
 
 impl Module for Blur{
-    fn new() ->  Blur{
-        Blur
-    }
-    fn exec(image: Matrix) -> Matrix{
+    fn exec(&self, image: &Matrix, args: &str) -> Matrix where Self:Sized{
         println!("Contrast");
         Matrix::new()
     }
