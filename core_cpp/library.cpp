@@ -122,12 +122,20 @@ int **draw_line(int **image,
                 int rows, int cols, int type,
                 int first_row, int first_col,
                 int second_row, int second_col,
-                int color,   int thickness) {
+                int color, int thickness) {
     Mat temp = convert_memory_to_image(image, rows, cols, type);
     Scalar color_cv(color / 256 / 256, color / 256 % 256, color % 256);
     temp = draw_line(temp, Point(first_row, first_col), Point(second_row, second_col),
                      color_cv, thickness);
 
+    return convert_mat_to_memory(temp);
+}
+
+int **crop_c(int **image,
+           int original_rows, int original_cols, int type,
+           int row_start, int col_start, int new_rows, int new_cols) {
+    Mat temp = convert_memory_to_image(image, original_rows, original_cols, type);
+    temp = crop_mat(temp, row_start, col_start, new_rows, new_cols);
     return convert_mat_to_memory(temp);
 }
 

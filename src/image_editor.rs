@@ -37,6 +37,9 @@ extern "C" {
     pub fn draw_line(image: *const c_int, rows: c_int, cols: c_int, image_type: c_int,
                      first_row: c_int, first_col: c_int, second_row: c_int, second_col: c_int,
                      color: c_int, thickness: c_int) -> *mut c_int;
+
+    pub fn crop_c(image: *const c_int, original_rows: c_int, original_cols: c_int, image_type: c_int,
+                row_start: c_int, col_start: c_int, new_rows: c_int, new_cols: c_int) -> *mut c_int;
 }
 
 impl ImageEditor {
@@ -90,7 +93,6 @@ impl ImageEditor {
         {
             if *pair.0 == String::from(module_name) {
                 let module = &pair.1;
-                ;
                 self.current_image = module.exec(&self.current_image, args);
                 break;
             }

@@ -19,9 +19,8 @@ impl Module for DrawShape {
 
 
         let args_vec: Vec<&str> = args.split(":").collect();
-        println!("{:?}", args_vec);
         if args_vec.len() < 6 {
-            println!("Invalid arguments, returning the unchanged image");
+            panic!("Invalid arguments");
             //return image;
         }
         let shape = args_vec[0];
