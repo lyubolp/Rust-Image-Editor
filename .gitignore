@@ -22,7 +22,6 @@ Cargo.lock
 #CMake files that are not needed (only the code + CMakeLists.txt is needed)
 /core_cpp/CMakeFiles
 /core_cpp/cmake-build-debug
-/core_cpp
 /tests/cpp/cmake-build-debug
 
 #Test results
