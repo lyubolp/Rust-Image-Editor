@@ -18,5 +18,5 @@ fn main() {
     let path = "tests/images/test_b.png";
     image_editor.open_image(path);
     image_editor.call_module("Crop", "10:10:70:70");
-    image_editor.save_image_as("tests/images/test_a2.png");
+    image_editor.save_image_as("tests/images/result.png");
 }
