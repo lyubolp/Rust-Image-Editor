@@ -139,4 +139,10 @@ int **crop_c(int **image,
     return convert_mat_to_memory(temp);
 }
 
+int **laplace_c(int **image, int rows, int cols, int type, int kernel_size)
+{
+    Mat temp = convert_memory_to_image(image, rows, cols, type);
+    temp = laplace(temp, kernel_size);
+    return convert_mat_to_memory(temp);
+}
 }
