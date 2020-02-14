@@ -8,6 +8,7 @@ use crate::canny::Canny;
 use crate::crop::Crop;
 use crate::laplace::Laplace;
 use crate::shapes::DrawShape;
+
 extern crate libc;
 
 use libc::c_int;
@@ -39,7 +40,9 @@ extern "C" {
                      color: c_int, thickness: c_int) -> *mut c_int;
 
     pub fn crop_c(image: *const c_int, original_rows: c_int, original_cols: c_int, image_type: c_int,
-                row_start: c_int, col_start: c_int, new_rows: c_int, new_cols: c_int) -> *mut c_int;
+                  row_start: c_int, col_start: c_int, new_rows: c_int, new_cols: c_int) -> *mut c_int;
+    pub fn laplace_c(image: *const c_int, rows: c_int, cols: c_int, image_type: c_int,
+                   kernel_size: c_int) -> *mut c_int;
 }
 
 impl ImageEditor {
@@ -52,7 +55,6 @@ impl ImageEditor {
                           (String::from("Crop"), Box::new(Crop)),
                           (String::from("Laplace"), Box::new(Laplace)),
                           (String::from("Draw shape"), Box::new(DrawShape))
-
             ],
             current_image: Matrix::new(),
             io: IO::new(),

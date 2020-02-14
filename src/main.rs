@@ -10,13 +10,14 @@ mod laplace;
 mod shapes;
 
 
-
 use crate::image_editor::ImageEditor;
 
 fn main() {
     let mut image_editor = ImageEditor::new();
-    let path = "tests/images/test_b.png";
-    image_editor.open_image(path);
-    image_editor.call_module("Crop", "10:10:70:70");
-    image_editor.save_image_as("tests/images/test_a2.png");
+    let paths = ["tests/images/test_b.png",
+        "tests/images/test_a.jpg"];
+
+    image_editor.open_image(paths[1]);
+    image_editor.call_module("Laplace", "3");
+    image_editor.save_image_as("tests/images/result.png");
 }
