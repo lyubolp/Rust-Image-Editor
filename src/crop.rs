@@ -12,19 +12,19 @@ impl Module for Crop {
         //args: x1:y1:x2:y2
         let args_vec: Vec<&str> = args.split(":").collect();
         let x1 = match args_vec[0].parse::<i32>() {
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let y1 = match args_vec[1].parse::<i32>() {
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let x2 = match args_vec[2].parse::<i32>() {
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let y2 = match args_vec[3].parse::<i32>() {
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let new_rows = y2 - y1;

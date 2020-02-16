@@ -22,6 +22,7 @@ Mat convert_memory_to_image(int **memory, int rows, int cols, int type) {
 
     for (size_t row = 0; row < image.rows; row++) {
         for (size_t col = 0; col < image.cols; col++) {
+            std::cout << memory[row][col];
             image.at<Vec3b>(row, col)[0] = memory[row][col] / 256 / 256;
             image.at<Vec3b>(row, col)[1] = memory[row][col] / 256 % 256;
             image.at<Vec3b>(row, col)[2] = memory[row][col] % 256;
@@ -99,7 +100,7 @@ int **draw_circle(int **image,
                   int radius, int color,
                   int thickness) {
     Mat temp = convert_memory_to_image(image, rows, cols, type);
-    Scalar color_cv(color / 256 / 256, color / 256 % 256, color % 256);
+    Scalar color_cv(color % 256, color / 256 % 256, color / 256 / 256);
     temp = draw_circle(temp, Point(center_row, center_col), radius, color_cv, thickness);
 
     return convert_mat_to_memory(temp);
@@ -111,7 +112,7 @@ int **draw_rectangle(int **image,
                      int second_row, int second_col,
                      int color, int thickness) {
     Mat temp = convert_memory_to_image(image, rows, cols, type);
-    Scalar color_cv(color / 256 / 256, color / 256 % 256, color % 256);
+    Scalar color_cv(color % 256, color / 256 % 256, color / 256 / 256);
     temp = draw_rectangle(temp, Point(first_row, first_col), Point(second_row, second_col),
                           color_cv, thickness);
 
@@ -123,10 +124,15 @@ int **draw_line(int **image,
                 int first_row, int first_col,
                 int second_row, int second_col,
                 int color, int thickness) {
+    std::cout << "2.1" << std::endl;
     Mat temp = convert_memory_to_image(image, rows, cols, type);
-    Scalar color_cv(color / 256 / 256, color / 256 % 256, color % 256);
+    std::cout << "2.2" << std::endl;
+    Scalar color_cv(color % 256, color / 256 % 256, color / 256 / 256);
+    std::cout << "2.3" << std::endl;
     temp = draw_line(temp, Point(first_row, first_col), Point(second_row, second_col),
                      color_cv, thickness);
+
+    std::cout << "2.6" << std::endl;
 
     return convert_mat_to_memory(temp);
 }

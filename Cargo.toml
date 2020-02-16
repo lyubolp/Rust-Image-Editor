@@ -12,3 +12,13 @@ cmake = "0.1.31"
 [dependencies]
 libc="*"
 sha-1="*"
+gdk-pixbuf = "0.8.0"
+
+[dependencies.gtk]
+version = "0.8.0"
+features = ["v3_16"]
+
+[dependencies.gio]
+version = ""
+features = ["v2_44"]
+

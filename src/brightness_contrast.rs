@@ -18,7 +18,7 @@ impl Module for Brightness {
         let brightness = match args.parse::<i32>()
         {
             Ok(val) => val,
-            Err(E) => {
+            Err(e) => {
                 println!("Argument invalid, setting it to 0");
                 0
             }
@@ -39,7 +39,7 @@ impl Module for Contrast {
             let contrast = match args.parse::<f64>()
             {
                 Ok(val) => val,
-                Err(E) => {
+                Err(e) => {
                     println!("Argument invalid, setting it to 0");
                     0f64
                 }
