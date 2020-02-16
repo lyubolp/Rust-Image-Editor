@@ -16,7 +16,7 @@ use std::os::raw::{c_char, c_double};
 
 pub struct ImageEditor {
     modules: Vec<(String, Box<dyn Module>)>,
-    current_image: Matrix,
+    pub current_image: Matrix,
     io: IO,
 }
 
@@ -70,7 +70,7 @@ impl ImageEditor {
                 self.current_image = image;
                 println!("File opened successfully !");
             }
-            Err(E) => println!("Unable to load image - error trace: {}", E)
+            Err(e) => println!("Unable to load image - error trace: {}", e)
         }
     }
 
@@ -78,14 +78,14 @@ impl ImageEditor {
     {
         match self.io.save(&self.current_image) {
             Ok(_) => println!("File saved successfully"),
-            Err(E) => println!("Unable to save image - error trace: {}", E)
+            Err(e) => println!("Unable to save image - error trace: {}", e)
         }
     }
     pub fn save_image_as(&mut self, path: &str)
     {
         match self.io.save_as(&self.current_image, path) {
             Ok(_) => println!("File saved successfully"),
-            Err(E) => println!("Unable to save image - error trace: {}", E)
+            Err(e) => println!("Unable to save image - error trace: {}", e)
         }
     }
 

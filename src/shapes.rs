@@ -6,6 +6,7 @@ pub struct DrawShape;
 
 impl Module for DrawShape {
     fn exec(&self, image: &Matrix, args: &str) -> Matrix where Self: Sized {
+        println!("1");
         /*
         shape:color_hex:thickness:first_point_col:first_point_row:second_point_col:second_point_row
 
@@ -31,25 +32,25 @@ impl Module for DrawShape {
                 i32::from_str_radix(&args_vec[1][5..7], 16).unwrap()
         };
         let thickness = match args_vec[2].parse::<i32>(){
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let first_row = match args_vec[3].parse::<i32>(){
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
         let first_column = match args_vec[4].parse::<i32>(){
-            Ok(T) => T,
+            Ok(val) => val,
             Err(_) => panic!("Invalid argument")
         };
 
         if shape == "r" || shape == "l" {
             let second_row = match args_vec[5].parse::<i32>(){
-                Ok(T) => T,
+                Ok(val) => val,
                 Err(_) => panic!("Invalid argument")
             };
             let second_col = match args_vec[6].parse::<i32>(){
-                Ok(T) => T,
+                Ok(t) => t,
                 Err(_) => panic!("Invalid argument")
             };
 
@@ -62,11 +63,13 @@ impl Module for DrawShape {
                     Matrix::from_memory(memory, rows, cols, image_type)
                 }
             } else if shape == "l" {
+                println!("2");
                 unsafe {
                     let memory = draw_line(image.to_memory(),
                                              rows, cols, image.image_type,
                                              first_row, first_column,
                                              second_row, second_col, color, thickness);
+                    println!("3");
                     Matrix::from_memory(memory, rows, cols, image_type)
                 }
             }
@@ -75,7 +78,7 @@ impl Module for DrawShape {
             }
         } else {
             let radius = match args_vec[5].parse::<i32>(){
-                Ok(T) => T,
+                Ok(val) => val,
                 Err(_) => panic!("Invalid argument")
             };
             unsafe {

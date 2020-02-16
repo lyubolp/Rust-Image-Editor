@@ -10,8 +10,8 @@ impl Module for Laplace{
         let cols = image.cols as i32;
         let image_type = image.image_type;
         let kernel_size: i32 = match args.parse::<i32>(){
-            Ok(T) => T,
-            Err(E) => panic!("Invalid argument format")
+            Ok(val) => val,
+            Err(e) => panic!("Invalid argument format")
         };
 
         unsafe{

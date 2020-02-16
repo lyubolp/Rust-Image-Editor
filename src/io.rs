@@ -56,45 +56,22 @@ impl IO {
 
 #[cfg(test)]
 mod tests {
-    use sha1::{Sha1, Digest};
-    use std::{fs, io};
     use crate::ImageEditor;
 
     #[test]
     fn io_basic()
     {
         let mut image_editor = ImageEditor::new();
-        let path = "tests/images/test.jpg";
-        let path2 = "tests/images/test2.jpg";
+        let path = "tests/images/test_b.png";
+        let path2 = "tests/images/test_a.jpg";
+
         image_editor.open_image(path);
-        image_editor.save_image_as(path2);
+        assert_eq!(image_editor.get_image().rows, 100);
+        assert_eq!(image_editor.get_image().cols, 100);
 
-        let mut file = match fs::File::open(path)
-        {
-            Ok(f) => f,
-            Err(_) => panic!("Cannot find test files")
-        };
-        let mut file2 = match fs::File::open(path2)
-        {
-            Ok(f) => f,
-            Err(_) => panic!("Cannot find test files")
-        };
+        image_editor.open_image(path2);
+        assert_eq!(image_editor.get_image().rows, 1200);
+        assert_eq!(image_editor.get_image().cols, 1800);
 
-        let mut hasher = Sha1::new();
-        let mut n = match io::copy(&mut file, &mut hasher){
-            Ok(val) => val,
-            Err(E) => panic!("Cannot copy to hasher - {}", E)
-        };
-
-        let hash = hasher.result();
-
-        let mut hasher2 = Sha1::new();
-        n = match io::copy(&mut file2, &mut hasher2){
-            Ok(val) => val,
-            Err(E) => panic!("Cannot copy to hasher - {}", E)
-        };
-
-        let hash2 = hasher2.result();
-        assert_eq!(hash == hash2, true);
     }
 }
