@@ -52,6 +52,7 @@ fn main() {
     let rectangle_button: gtk::Button = builder.get_object("button_rectangle").unwrap();
     let crop_button: gtk::Button = builder.get_object("button_crop").unwrap();
     let laplace_button: gtk::Button = builder.get_object("button_laplace").unwrap();
+    let blur_button: gtk::Button = builder.get_object("button_blur").unwrap();
 
     let open_file_dialog: gtk::FileChooserDialog = builder.get_object("fileopendialog").unwrap();
     let save_as_file_dialog: gtk::FileChooserDialog = builder.get_object("filesavedialog").unwrap();
@@ -66,6 +67,7 @@ fn main() {
     let circle_dialog: gtk::Dialog = builder.get_object("circledialog").unwrap();
     let rectangle_dialog: gtk::Dialog = builder.get_object("rectangledialog").unwrap();
     let crop_dialog: gtk::Dialog = builder.get_object("cropdialog").unwrap();
+    let blur_dialog: gtk::Dialog = builder.get_object("blurdialog").unwrap();
 
     let invalid_argument: gtk::Dialog = builder.get_object("invalid_arguments_dialog").unwrap();
     let invalid_argument_rc = Rc::new(RefCell::new(invalid_argument));
@@ -73,6 +75,7 @@ fn main() {
     let brightness_slider: gtk::Scale = builder.get_object("value_slider").unwrap();
     let contrast_slider: gtk::Scale = builder.get_object("value_slider_contrast").unwrap();
     let laplace_slider: gtk::Scale = builder.get_object("value_slider_laplace").unwrap();
+    let blur_slider: gtk::Scale = builder.get_object("value_slider_blur").unwrap();
 
     let line_x1: gtk::Entry = builder.get_object("x1_l").unwrap();
     let line_y1: gtk::Entry = builder.get_object("y1_l").unwrap();
@@ -138,6 +141,11 @@ fn main() {
     ]);
 
     crop_dialog.add_buttons(&[
+        ("Apply", gtk::ResponseType::Ok),
+        ("Cancel", gtk::ResponseType::Cancel),
+    ]);
+
+    blur_dialog.add_buttons(&[
         ("Apply", gtk::ResponseType::Ok),
         ("Cancel", gtk::ResponseType::Cancel),
     ]);
@@ -464,6 +472,18 @@ fn main() {
             }
         }
         crop_dialog.hide();
+    });
+
+    let mut image_editor_access_blur = image_editor_rc.clone();
+    let image_viewer_access_blur = image_viewer_rc.clone();
+    blur_button.connect_clicked(move |_| {
+        if blur_dialog.run() == gtk::ResponseType::Ok {
+            let slider_value = blur_slider.get_value() as i32;
+            update_view(&mut image_editor_access_blur.borrow_mut(), &image_viewer_access_blur.borrow_mut());
+            image_editor_access_blur.borrow_mut().call_module("Blur", &slider_value.to_string());
+        }
+
+        blur_dialog.hide();
     });
 
     window.connect_delete_event(move |_, _| {

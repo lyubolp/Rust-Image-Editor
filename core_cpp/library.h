@@ -6,5 +6,6 @@
 #include "draw_shapes.h"
 #include "crop.h"
 #include "laplace.h"
+#include "blur.h"
 
 #endif //CORE_CPP_LIBRARY_H

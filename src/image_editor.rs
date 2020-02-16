@@ -42,8 +42,11 @@ extern "C" {
     pub fn crop_c(image: *const c_int, original_rows: c_int, original_cols: c_int, image_type: c_int,
                   row_start: c_int, col_start: c_int, new_rows: c_int, new_cols: c_int) -> *mut c_int;
     pub fn laplace_c(image: *const c_int, rows: c_int, cols: c_int, image_type: c_int,
-                   kernel_size: c_int) -> *mut c_int;
+                     kernel_size: c_int) -> *mut c_int;
+
+    pub fn blur_c(image: *const c_int, rows: c_int, cols: c_int, image_type: c_int, kernel_size: c_int) -> *mut c_int;
 }
+
 
 impl ImageEditor {
     pub fn new() -> Self {
